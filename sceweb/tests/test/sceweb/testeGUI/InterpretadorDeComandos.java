@@ -30,13 +30,13 @@ public class InterpretadorDeComandos {
 		}
 		System.setProperty("webdriver.chrome.driver", Constant.Chrome);
 		driver = new ChromeDriver();
-		baseUrl = "http://localhost:8080/";
+		baseUrl = "http://localhost:9080/";
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 	public void fluxo() throws Exception {
 		String acao;
 		
-		for (int i = 1; i < 4; i++) {
+		for (int i = 1; i < 5; i++) {
 			// linha x coluna
 			 
 			System.out.println("celula = " + ExcelUtils.getCellData(i, 2));
@@ -53,6 +53,7 @@ public class InterpretadorDeComandos {
 				formEmpresa.abre();
 				Thread.sleep(5000);
 			}
+			
 			if (acao.equals("cadastrarEmpresa")){
 				formEmpresa = new FormEmpresa(driver);
 				formEmpresa.cadastra(ExcelUtils.getCellData(i, 4), ExcelUtils.getCellData(i, 5),
@@ -63,8 +64,8 @@ public class InterpretadorDeComandos {
 				try {
 					WebDriverWait wait = new WebDriverWait(driver, 10);
 					wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("mensagem")));
-					//assertEquals(ExcelUtils.getCellData(1, 7), driver.findElement(By.id("mensagem")).getText());
-					//driver.quit();
+					assertEquals(ExcelUtils.getCellData(1, 7), driver.findElement(By.id("mensagem")).getText());
+					driver.quit();
 				} catch (Error e) {
 					verificationErrors.append(e.toString());
 				}

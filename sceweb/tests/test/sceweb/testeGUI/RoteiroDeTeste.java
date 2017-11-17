@@ -21,8 +21,7 @@ public class RoteiroDeTeste {
 	@Test
 	public void test() throws Exception {
 		InterpretadorDeComandos cmd = new InterpretadorDeComandos();
-		cmd.fluxo();
-		assertEquals(1,1);
+		cmd.fluxo();		
 	}
 
 }

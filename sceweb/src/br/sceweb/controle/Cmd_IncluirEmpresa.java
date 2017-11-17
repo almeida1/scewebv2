@@ -16,7 +16,7 @@ public class Cmd_IncluirEmpresa implements ICommand{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String msg = null;
 		logger.info("chamou o comando incluir empresa");
-		
+		int rc =0; //codigo de retorno da inclusao no DB
 		Empresa empresa = new Empresa();
 		EmpresaService empresaService = new EmpresaService();
 		try {
@@ -29,8 +29,12 @@ public class Cmd_IncluirEmpresa implements ICommand{
 			empresa.setTelefoneResponsavel(request.getParameter("txtTelefoneResponsavel"));
 			empresa.setSetor(request.getParameter("txtSetor"));
 			empresa.setEmail(request.getParameter("txtEmail"));
-			empresaService.cadastrarEmpresa(empresa);
-			msg = "cadastro realizado com sucesso";
+			rc = empresaService.cadastrarEmpresa(empresa);
+			if (rc == 1) {
+				msg = "cadastro realizado com sucesso";
+			}else{
+				msg = "dados invalidos";
+			}
 			request.setAttribute("msg", msg);
 			RequestDispatcher view = request.getRequestDispatcher("FormEmpresa.jsp");
 	        view.forward(request, response); 
